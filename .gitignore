@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.sessions/
+handoffs.jsonl
+.venv/
+desafio_tecnico_ai_eng_artefact.pdf
