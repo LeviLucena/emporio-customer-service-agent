@@ -220,15 +220,16 @@ class Repository:
         pool.sort(key=lambda p: abs(p.effective_price - product.effective_price))
         return pool[:limit]
 
-    def find_customer(self, identifier: str) -> Customer | None:
-        """Resolve an e-mail or phone number (digits only compared) to a customer."""
+    def find_customers(self, identifier: str) -> list[Customer]:
+        """All customers matching an e-mail or phone (digits compared). E-mails are not unique in the data."""
         ident = (identifier or "").strip().lower()
         if not ident:
-            return None
+            return []
         digits = re.sub(r"\D", "", ident)
+        found = []
         for c in self.customers.values():
             if "@" in ident and c.email == ident:
-                return c
-            if len(digits) >= 8 and re.sub(r"\D", "", c.phone).endswith(digits[-9:]):
-                return c
-        return None
+                found.append(c)
+            elif "@" not in ident and len(digits) >= 8 and re.sub(r"\D", "", c.phone).endswith(digits[-9:]):
+                found.append(c)
+        return found

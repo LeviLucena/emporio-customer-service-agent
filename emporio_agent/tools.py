@@ -193,8 +193,10 @@ class Toolbox:
     def _authorise(self, order_id: int, identifier: str):
         """Orders are only disclosed to the account holder (LGPD): e-mail or phone must match."""
         order = self.repo.orders.get(int(order_id)) if str(order_id).strip().isdigit() else None
-        customer = self.repo.find_customer(identifier)
-        if order is None or customer is None or order.customer_id != customer.customer_id:
+        # E-mails are not unique in the data (customers 11 and 43): accept any matching record that owns the order.
+        customer = next((c for c in self.repo.find_customers(identifier)
+                         if order is not None and c.customer_id == order.customer_id), None)
+        if order is None or customer is None:
             # Same message for "no such order" and "wrong owner": do not leak which orders exist.
             return None, None, {"error": "could not verify this order for the information provided",
                                 "hint": "ask the customer for the order number and the e-mail or phone used on the purchase"}

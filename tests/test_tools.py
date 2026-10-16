@@ -103,6 +103,11 @@ class ToolsTest(unittest.TestCase):
         self.assertIn("error", self.call(tb, "get_order_status", order_id=7,
                                          customer_identifier="lucas.mendes@jmail.com"))
 
+    def test_shared_email_does_not_lock_out_legitimate_owner(self):
+        # bruno.martins@jmail.com belongs to customers 11 and 43; order 10 is customer 11's
+        r = self.call(self.tb(), "get_order_status", order_id=10, customer_identifier="bruno.martins@jmail.com")
+        self.assertEqual(r["order_id"], 10)
+
     def test_phone_identification(self):
         r = self.call(self.tb(), "get_order_status", order_id=7, customer_identifier="67 99789-0123")
         self.assertEqual(r["order_id"], 7)
