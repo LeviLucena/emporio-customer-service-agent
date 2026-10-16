@@ -10,14 +10,15 @@
 
 - `get_product_details({"name": "Takamine GD20"})`
   ```json
-  {"product_id": 95, "name": "Takamine GD20 Dreadnought Natural", "category": "Violões", "list_price": "R$ 2.199,00", "availability": "in_stock", "pix_price": "R$ 2.089,05", "description": "Violão dreadnought Takamine com tampo sólido em cedro. Excelente para fingerstyle com timbre quente e definido.", "specs": {"top": "Cedro Sólido", "back_sides": "Sapele", "neck": "Mogno", "strings": "steel", "scale": "650mm", "electronics": "no", "color": "Natural"}}
+  {"product_id": 95, "name": "Takamine GD20 Dreadnought Natural", "category": "Violões", "list_price": "R$ 2.199,00", "availability": "in_stock", "pix_price": "R$ 2.089,05", "description": "Violão dreadnought Takamine com tampo sólido em cedro. Excelente para fingerstyle com timbre quente e definido.", "specs": {"top": "Cedro Sólido", "back_sides": "Sapele", "neck": "Mogno", "strings": "steel", "scale": "650mm", "electronics": "no", "color": "Natural"}, "expired_promotions": {"items": ["Oferta Especial (12%)"], "note": "ENDED - never offer these; say they are over and quote the current price"}}
   ```
 
 </details>
 
-**Tom:** Takamine GD20 Dreadnought – **R$ 2.199,00** (R$ 2.089,05 à vista no PIX). Está em estoque.
+**Tom:** Takamine GD20 Dreadnought Natural – **R$ 2.199,00** (preço à vista).  
+Se pagar via PIX sai por **R$ 2.089,05**.
 
-Posso te ajudar com mais algum modelo ou detalhe?
+Qualquer outra dúvida ou quiser saber mais opções, é só falar!
 
 ---
 
@@ -25,24 +26,19 @@ Posso te ajudar com mais algum modelo ou detalhe?
 
 <details><summary>Tool calls</summary>
 
-- `search_products({"category": "Violões", "include_unavailable": false, "max_price": 0, "min_price": 0, "query": "Taylor 110e"})`
+- `get_product_details({"name": "Taylor 110e"})`
   ```json
-  {"total_matches": 0, "products": [], "note": "no matching sellable product; try broader terms or other categories"}
+  {"product_id": 94, "name": "Taylor 110e Dreadnought Natural", "category": "Violões", "list_price": "R$ 5.999,00", "availability": "in_stock", "promotion": {"name": "Desconto Exclusivo", "discount_percent": 8.0, "original_price": "R$ 5.999,00", "promotional_price": "R$ 5.519,08"}, "pix_discount": "not applicable (PIX 5% does not stack on promotional prices)", "description": "Violão dreadnought Taylor com tampo sólido em Sitka Spruce e eletrônica ES2. Perfeito para palco com som amplificado de alta fidelidade.", "specs": {"top": "Sitka Spruce Sólido", "back_sides": "Walnut", "neck": "Tropical Mahogany", "strings": "steel", "scale": "648mm", "electronics": "yes", "color": "Natural"}}
   ```
 
 </details>
 
-**Tom:** Oi! No momento não temos o **Taylor 110e** disponível para venda no nosso catálogo. Por isso não consigo informar preço nem promoção para ele.
+**Tom:** Taylor 110e Dreadnought Natural – **R$ 5.999,00** (preço normal).  
+Tem promoção “Desconto Exclusivo” de **8 %**, ficando **R$ 5.519,08**.
 
-Se quiser, posso sugerir alguns violões similares que temos em estoque, como:
+A promoção já está aplicada, então o desconto de 5 % do PIX **não se soma** ao preço promocional. Se pagar via PIX o valor será o mesmo **R$ 5.519,08**.
 
-- **Taylor 114e** – R$ 3.299,00  
-- **Yamaha FG800** – R$ 2.199,00  
-- **Takamine GD20** – R$ 2.199,00  
-
-Quanto ao desconto de 5 % no PIX, ele vale sobre o preço de venda (ou o preço promocional, se houver). Ou seja, se houver promoção, o desconto de 5 % é aplicado ao valor já promocional.
-
-Me avisa se quiser ver mais opções ou detalhes de algum desses modelos!
+Precisa de mais alguma informação ou quer comparar com outro modelo?
 
 ---
 
@@ -50,27 +46,16 @@ Me avisa se quiser ver mais opções ou detalhes de algum desses modelos!
 
 <details><summary>Tool calls</summary>
 
-- `search_products({"category": "Violões", "include_unavailable": false, "max_price": 0, "min_price": 0, "query": "Martin D-28"})`
+- `get_product_details({"name": "Martin D-28"})`
   ```json
-  {"total_matches": 0, "products": [], "note": "no matching sellable product; try broader terms or other categories"}
-  ```
-- `get_store_policy({"topic": "promotions"})`
-  ```json
-  {"topic": "promotions", "policy_text": "## 6. Promoções e descontos\nCampanhas principais: Aniversário da Loja (agosto, 10% a 25% em itens selecionados); Black Friday (novembro, 15% a 30% em todo o catálogo); Volta às Aulas (fevereiro, instrumentos para estudantes); Queima de Estoque (pontual); Semana do Músico (semana de 22 de novembro, Dia do Músico).\n\nRegras:\n- Promoções NÃO são cumulativas. O desconto de PIX (5%) não se aplica sobre preços já promocionais.\n- Promoções sujeitas à disponibilidade de estoque; produto esgotado não gera direito a rain check (reserva de preço).\n- Preços promocionais devem sempre ser apresentados junto ao preço original e ao percentual de desconto."}
+  {"product_id": 93, "name": "Martin D-28 Dreadnought Natural", "category": "Violões", "list_price": "R$ 11.499,00", "availability": "in_stock", "pix_price": "R$ 10.924,05", "stock_note": "only 2 unit(s) left", "description": "Lendário violão Martin D-28 com tampo sólido em Sitka Spruce e fundo em Rosewood. Referência mundial em sonoridade e construção.", "specs": {"top": "Sitka Spruce Sólido", "back_sides": "East Indian Rosewood", "neck": "Select Hardwood", "strings": "steel", "scale": "645mm", "electronics": "no", "color": "Natural"}, "expired_promotions": {"items": ["Promoção de Páscoa (15%)", "Promoção de Páscoa (10%)"], "note": "ENDED - never offer these; say they are over and quote the c …
   ```
 
 </details>
 
-**Tom:** Oi! No momento o **Martin D‑28** não está disponível no nosso catálogo, então não consigo confirmar se a promoção de Páscoa ainda está valendo.
+**Tom:** Martin D‑28 Dreadnought Natural – **R$ 11.499,00** (preço atual).  
+No PIX sai por **R$ 10.924,05**.
 
-Lembrando que, segundo a nossa política de promoções, os descontos de campanha não são cumulativos com o desconto extra de 5 % no PIX – ou seja, o PIX só dá 5 % sobre o preço de venda (ou sobre o preço já promocional, se houver).
-
-Posso sugerir alguns violões de alta qualidade que temos em estoque, como:
-
-- **Taylor 114e** – R$ 3.299,00  
-- **Yamaha FG800** – R$ 2.199,00  
-- **Takamine GD20** – R$ 2.199,00  
-
-Se quiser mais detalhes ou outra opção, é só falar!
+A promoção de Páscoa (15 %/10 %) já terminou, então o preço que temos agora é esse. Precisa de mais alguma coisa? 🎸
 
 ---

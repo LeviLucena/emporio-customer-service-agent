@@ -6,7 +6,7 @@
 
 **Customer:** Cadê meu pedido 8? Já faz uma semana.
 
-**Tom:** Oi! Para eu verificar o que está acontecendo com o pedido #8, preciso do e‑mail ou do telefone que foi usado na compra. Você pode me informar, por favor?
+**Tom:** Oi! Para eu verificar o que está acontecendo com o pedido **#8**, preciso do e‑mail ou do telefone que foi usado na compra. Você pode me passar um desses, por favor?
 
 ---
 
@@ -21,7 +21,7 @@
 
 </details>
 
-**Tom:** Entendi, Pedro. Ainda não consegui localizar o pedido com esses dados. Você poderia me confirmar o número do pedido (às vezes aparece com 6 ou 7 dígitos) e, se possível, o telefone que usou na compra? Assim consigo checar o status rapidinho.
+**Tom:** Entendi, Pedro. Para localizar o pedido, preciso confirmar também o telefone que foi usado na compra. Você poderia me informar esse número?
 
 ---
 
@@ -36,8 +36,13 @@
 
 </details>
 
-**Tom:** Oi Ana, seu pedido #8 já foi enviado e está a caminho. O código de rastreio é **BRJL5544332BR**; você pode acompanhar pelo site dos Correios. A entrega está prevista para **28/02/2026**. 
+**Tom:** Oi Ana! Seu pedido **#8** já foi despachado e está a caminho. 🚚  
+- **Data da compra:** 15/02/2026  
+- **Valor:** R$ 349,90  
+- **Item:** Kala KA‑C Concert Mogno (1 unidade)  
+- **Código de rastreio:** BRJL5544332BR  
+- **Previsão de entrega:** 28/02/2026  
 
-Qualquer coisa, é só chamar!
+Qualquer dúvida ou se precisar de mais alguma coisa, é só falar!
 
 ---

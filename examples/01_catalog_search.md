@@ -15,7 +15,7 @@
 
 </details>
 
-**Tom:** Oi! Temos várias opções de violões até R$ 1 000. Aqui vão os 8 mais baratos que encontrei:
+**Tom:** Oi! Temos 12 violões na faixa de até R$ 1 000. Aqui estão os 8 mais baratos:
 
 - Tagima Memphis AC‑39 Nylon – R$ 429,90  
 - Rozini RC‑104 Nylon Estudante – R$ 459,90  
@@ -26,9 +26,7 @@
 - Yamaha F310 Aço – R$ 699,90  
 - Tagima Dallas Tuner Aço – R$ 749,00  
 
-No total são **12 modelos** dentro desse valor. Quer filtrar por marca, tipo de corda (nylon ou aço) ou alguma faixa de preço mais específica? 😊
-
-Qualquer coisa, estou aqui pra ajudar!
+Quer filtrar por marca, tipo de corda (nylon ou aço) ou alguma faixa de preço mais específica? Estou aqui para ajudar!
 
 ---
 
@@ -43,14 +41,8 @@ Qualquer coisa, estou aqui pra ajudar!
 
 </details>
 
-**Tom:** O violão de nylon mais barato que temos é o **Tagima Memphis AC‑39 Nylon**, por **R$ 429,90**.
+**Tom:** O nylon mais barato é o **Tagima Memphis AC‑39** – R$ 429,90.
 
-**Parcelamento no cartão de crédito**  
-- Até **5x sem juros**  
-- Cada parcela: **R$ 85,98**  
-
-Se preferir, dá pra pagar à vista com **PIX** (5 % de desconto) e o total fica **R$ 408,40**.
-
-Quer saber mais detalhes ou ver outras opções? 😊
+Parcelamento: até **5 x sem juros** de R$ 85,98 no cartão de crédito. Se pagar via PIX sai R$ 408,40 (5 % de desconto). Precisa de mais alguma coisa? 🎸
 
 ---
