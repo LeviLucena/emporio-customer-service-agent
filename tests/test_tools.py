@@ -74,6 +74,16 @@ class ToolsTest(unittest.TestCase):
         self.assertEqual(r["total_matches"], 0)
         self.assertIn("note", r)
 
+    def test_zero_price_bounds_mean_unset(self):
+        # Regression: the LLM sends max_price=0 for "not provided"; it must not filter everything out.
+        r = self.call(self.tb(), "search_products", query="Taylor 110e", category="Violões", max_price=0, min_price=0)
+        self.assertEqual([p["product_id"] for p in r["products"]], [94])
+
+    def test_expired_promotion_is_reported_as_ended(self):
+        r = self.call(self.tb(), "get_product_details", name="Martin D-28 Dreadnought")
+        self.assertNotIn("promotion", r)
+        self.assertIn("Páscoa", " ".join(r["expired_promotions"]["items"]))
+
     # ---- payments
     def test_installment_rules(self):
         tb = self.tb()
@@ -126,6 +136,17 @@ class ToolsTest(unittest.TestCase):
         self.assertTrue(wed["open_now"])
         self.assertFalse(sat_pm["open_now"])
         self.assertFalse(sun["open_now"])
+
+    def test_next_opening(self):
+        sat_pm = self.call(self.tb(at(2026, 2, 21, 14)), "get_store_policy", topic="hours")
+        self.assertTrue(sat_pm["next_opening"].startswith("Monday 2026-02-23"))
+        early = self.call(self.tb(at(2026, 2, 18, 7)), "get_store_policy", topic="hours")
+        self.assertTrue(early["next_opening"].startswith("Wednesday 2026-02-18"))
+
+    def test_portuguese_reason_is_normalised(self):
+        r = self.call(self.tb(), "check_return_eligibility", order_id=7,
+                      customer_identifier="leticia.rocha@jmail.com", reason="arrependimento")
+        self.assertEqual(r["requested_reason"], "regret")
 
     def test_all_policy_topics_resolve(self):
         from emporio_agent.tools import POLICY_TOPICS

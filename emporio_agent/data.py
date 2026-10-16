@@ -57,6 +57,7 @@ class Product:
     specs: dict
     active_discount_pct: float = 0.0
     active_promotion: str | None = None
+    expired_promotions: list[str] = field(default_factory=list)
     _tokens: set[str] = field(default_factory=set, repr=False)
 
     @property
@@ -124,9 +125,14 @@ class Repository:
             for r in _read("customers")
         }
         promos: dict[int, tuple[float, str]] = {}
+        expired: dict[int, list[str]] = {}
         for r in _read("promotions"):
             if r["is_active"].strip() != "1":
-                continue  # expired campaigns must never be quoted (manual §7.3)
+                # Expired campaigns are never quoted as offers (manual §7.3), but kept so the agent can
+                # explain transparently that a promotion the customer remembers has ended.
+                expired.setdefault(int(r["product_id"]), []).append(
+                    f"{r['description']} ({float(r['discount_percent']):g}%)")
+                continue
             pid, pct = int(r["product_id"]), float(r["discount_percent"])
             # Promotions are not cumulative (manual §6.2): keep the single best active one.
             if pid not in promos or pct > promos[pid][0]:
@@ -144,6 +150,7 @@ class Repository:
                         r["description"].strip(), int(r["stock_quantity"]), r["status"].strip(), specs)
             if pid in promos:
                 p.active_discount_pct, p.active_promotion = promos[pid]
+            p.expired_promotions = expired.get(pid, [])
             blob = " ".join([p.name, p.description, cat, " ".join(str(v) for v in specs.values())])
             p._tokens = set(tokenize(blob))
             self.products[pid] = p
@@ -176,6 +183,7 @@ class Repository:
         q_tokens = set(tokenize(query))
         cat_id = self.category_id_for(category) if category else None
         scored: list[tuple[float, Product]] = []
+        full_matches: set[int] = set()
         for p in self.products.values():
             if cat_id is not None and p.category_id != cat_id:
                 continue
@@ -191,6 +199,8 @@ class Repository:
                 if hits == 0:
                     continue
                 score = hits / len(q_tokens)
+                if hits == len(q_tokens):
+                    full_matches.add(p.product_id)
                 if score < 0.5:  # at least half of the query terms must match
                     continue
                 # Name matches weigh more than description matches.
@@ -198,6 +208,8 @@ class Repository:
             else:
                 score = 0.0
             scored.append((score, p))
+        if full_matches:  # precision first: drop partial matches when something matches every term
+            scored = [sp for sp in scored if sp[1].product_id in full_matches]
         scored.sort(key=lambda sp: (-sp[0], sp[1].effective_price))
         return [p for _, p in scored]
 

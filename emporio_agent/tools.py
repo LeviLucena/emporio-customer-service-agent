@@ -34,6 +34,11 @@ class Clock:
         return self.now().date()
 
 
+def _opening_window(weekday: int) -> tuple[int, int] | None:
+    """Opening window in minutes since midnight (manual §2); Monday=0."""
+    return (9 * 60, 18 * 60) if weekday <= 4 else (9 * 60, 13 * 60) if weekday == 5 else None
+
+
 def _load_policies() -> dict[str, str]:
     text = KNOWLEDGE_FILE.read_text(encoding="utf-8")
     sections: dict[str, str] = {}
@@ -58,6 +63,9 @@ def _product_view(p: Product, detail: bool = False) -> dict:
     if detail:
         d["description"] = p.description
         d["specs"] = p.specs
+        if p.expired_promotions:
+            d["expired_promotions"] = {"items": p.expired_promotions,
+                                      "note": "ENDED - never offer these; say they are over and quote the current price"}
     return d
 
 
@@ -97,18 +105,24 @@ class Toolbox:
     # -- catalog --
     def search_products(self, query: str = "", category: str = "", min_price: float | None = None,
                         max_price: float | None = None, include_unavailable: bool = False) -> dict:
+        # LLMs often send 0 for "not provided": a price bound of 0 is meaningless, treat it as unset.
+        min_price = min_price if min_price and min_price > 0 else None
+        max_price = max_price if max_price and max_price > 0 else None
         results = self.repo.search(query, category, min_price, max_price, include_unavailable)
         out: dict[str, Any] = {"total_matches": len(results),
                                "products": [_product_view(p) for p in results[:MAX_RESULTS]]}
         if len(results) > MAX_RESULTS:
-            out["note"] = f"showing the first {MAX_RESULTS}; ask the customer to narrow the search"
+            out["note"] = (f"{len(results)} matches in total but only the {MAX_RESULTS} cheapest are listed; tell the "
+                           "customer the real total and ask how to narrow the search")
         if not results:
             cat_id = self.repo.category_id_for(category) if category else None
             if cat_id is not None and not any(p.category_id == cat_id for p in self.repo.products.values()):
                 out["note"] = ("this category exists but has no products registered in the system right now; "
                                "do not invent items - offer to forward to the team")
             else:
-                out["note"] = "no matching sellable product; try broader terms or other categories"
+                out["note"] = ("no matching sellable product. Do NOT suggest products from memory: retry with "
+                               "broader terms, call get_product_details(name=...) if a specific model was asked "
+                               "(it also reports unavailable items), or offer a human handoff")
         return out
 
     def get_product_details(self, product_id: int | None = None, name: str = "") -> dict:
@@ -128,14 +142,16 @@ class Toolbox:
     # -- payments --
     def get_payment_options(self, amount: float | None = None, product_id: int | None = None) -> dict:
         promo = False
-        if product_id not in (None, ""):
+        if product_id not in (None, "", 0):
             p = self.repo.products.get(int(product_id))
             if p is None:
                 return {"error": "product not found"}
             amount, promo = p.effective_price, p.promo_price is not None
-        if amount is None or float(amount) <= 0:
+        if amount is None:
             return {"error": "provide a positive amount or a product_id"}
         amount = round(float(amount), 2)
+        if amount <= 0:
+            return {"error": "provide a positive amount or a product_id"}
 
         def min_installment(n: int) -> float:  # manual §3.1
             return 0.0 if n == 1 else 50.0 if n <= 3 else 80.0 if n <= 6 else 100.0
@@ -160,9 +176,16 @@ class Toolbox:
         if topic == "hours":
             now = self.clock.now()
             out["current_time"] = now.strftime("%A %Y-%m-%d %H:%M (Campo Grande)")
-            wd, hm = now.weekday(), now.hour * 60 + now.minute
-            window = (9 * 60, 18 * 60) if wd <= 4 else (9 * 60, 13 * 60) if wd == 5 else None
+            hm = now.hour * 60 + now.minute
+            window = _opening_window(now.weekday())
             out["open_now"] = bool(window and window[0] <= hm < window[1])
+            if not out["open_now"]:
+                for ahead in range(8):  # next regular opening (holidays are not considered)
+                    day = now + timedelta(days=ahead)
+                    w = _opening_window(day.weekday())
+                    if w and (ahead > 0 or hm < w[0]):
+                        out["next_opening"] = f"{day.strftime('%A %Y-%m-%d')} at 09:00"
+                        break
             out["note"] = "national holidays are closed even on weekdays; not checked automatically"
         return out
 
@@ -203,6 +226,8 @@ class Toolbox:
         order, customer, err = self._authorise(order_id, customer_identifier)
         if err:
             return err
+        reason = {"arrependimento": "regret", "desistencia": "regret", "defeito": "defect",
+                  "preferencia": "preference", "troca": "preference"}.get(normalize(reason), reason)
         today = self.clock.today()
         base: dict[str, Any] = {"order_id": order.order_id, "order_status": order.status, "today": today.isoformat()}
         if order.status == "cancelled":
