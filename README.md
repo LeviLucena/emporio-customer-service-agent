@@ -1,5 +1,16 @@
 # Empório da Música — Customer Service Agent
 
+![Python](https://img.shields.io/badge/Python_3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white)
+![gpt-oss](https://img.shields.io/badge/gpt--oss_120B-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Function Calling](https://img.shields.io/badge/Function_Calling-F59E0B?style=for-the-badge)
+![unittest](https://img.shields.io/badge/unittest-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite_8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Bun](https://img.shields.io/badge/Bun-F9F1E0?style=for-the-badge&logo=bun&logoColor=black)
+
 A text-based customer service agent for **Empório da Música**, a (fictional) musical instrument store in
 Campo Grande/MS. It answers product, price, stock, order, returns and store-policy questions, grounded in the
 store's CSV data and policy manual, and politely declines anything outside the store's scope.
