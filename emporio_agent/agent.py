@@ -21,6 +21,7 @@ class Agent:
     session_file: Path | None = None
     verbose: bool = False
     messages: list[dict] = field(default_factory=list)
+    last_tools_used: list[dict] = field(default_factory=list)  # tool calls of the latest turn (for UIs)
 
     def __post_init__(self) -> None:
         if self.session_file and Path(self.session_file).exists():
@@ -44,6 +45,7 @@ class Agent:
 
     def send(self, user_text: str) -> str:
         self.messages[0] = self._system()
+        self.last_tools_used = []
         self.messages.append({"role": "user", "content": user_text})
         for _ in range(MAX_TOOL_ROUNDS):
             msg = self.llm.chat(self.messages, TOOL_SCHEMAS)
@@ -58,6 +60,8 @@ class Agent:
             for call in calls:  # parallel calls are answered in order
                 fn = call["function"]
                 result = self.toolbox.call(fn["name"], fn.get("arguments"))
+                args = fn.get("arguments")
+                self.last_tools_used.append({"ferramenta": fn["name"], "argumentos": args if isinstance(args, dict) else {}})
                 if self.verbose:
                     print(f"  [tool] {fn['name']}({json.dumps(fn.get('arguments'), ensure_ascii=False)})")
                 self.messages.append({"role": "tool", "tool_name": fn["name"], "content": result})
