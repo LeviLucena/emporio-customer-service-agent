@@ -1,0 +1,136 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Empório da Música — design system.
+ * Paleta: madeira/âmbar sobre marrom profundo (vitrine de luthier à noite).
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0.9rem;
+  --background: oklch(0.19 0.024 45);
+  --foreground: oklch(0.95 0.014 80);
+  --card: oklch(0.24 0.028 46);
+  --card-foreground: oklch(0.95 0.014 80);
+  --popover: oklch(0.24 0.028 46);
+  --popover-foreground: oklch(0.95 0.014 80);
+  --primary: oklch(0.79 0.15 71);
+  --primary-foreground: oklch(0.21 0.03 48);
+  --secondary: oklch(0.3 0.035 48);
+  --secondary-foreground: oklch(0.94 0.014 80);
+  --muted: oklch(0.28 0.028 48);
+  --muted-foreground: oklch(0.73 0.03 68);
+  --accent: oklch(0.62 0.12 155);
+  --accent-foreground: oklch(0.16 0.02 150);
+  --destructive: oklch(0.62 0.19 27);
+  --destructive-foreground: oklch(0.97 0.01 80);
+  --border: oklch(0.34 0.03 50);
+  --input: oklch(0.32 0.03 50);
+  --ring: oklch(0.79 0.15 71);
+
+  --gradient-stage: radial-gradient(
+      120% 90% at 15% 0%,
+      oklch(0.31 0.06 62 / 0.85) 0%,
+      transparent 60%
+    ),
+    radial-gradient(90% 80% at 95% 10%, oklch(0.34 0.05 150 / 0.5) 0%, transparent 55%);
+  --shadow-warm: 0 20px 60px -25px oklch(0 0 0 / 0.8);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    background-image: var(--gradient-stage);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@utility surface {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-warm);
+}
+
+@utility bubble-user {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-radius: 1.1rem 1.1rem 0.25rem 1.1rem;
+}
+
+@utility bubble-bot {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+  border-radius: 1.1rem 1.1rem 1.1rem 0.25rem;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.25s ease-out both;
+}
+
+/* Hide the scrollbar but keep scrolling (wheel, trackpad, touch, keyboard) working. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
